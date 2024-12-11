@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/Counter/counter.dart';
+import 'package:get/get.dart';
 
-class Homepage extends StatelessWidget {
- Homepage({super.key});
+
+class Login extends StatelessWidget {
+  Login({super.key});
+
+  logincontroller c = Get.put(logincontroller());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 167, 16, 56),
         centerTitle: true,
-        title: Padding(
+        title: const Padding(
           padding: EdgeInsets.only(top: 3.0),
           child: Text(
-            "FACEBOOK",
+            "COUNTER APP",
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
           ),
         ),
-        leading: Icon(Icons.arrow_back_ios, size: 17),
-        actions: [
+        leading: const Icon(Icons.arrow_back, size: 17),
+        actions: const [
           Icon(Icons.qr_code, size: 17),
           Padding(
             padding: EdgeInsets.only(left: 10),
@@ -25,135 +31,38 @@ class Homepage extends StatelessWidget {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/image.jpg'),
+            image: AssetImage('images/image2.jpg'),
             fit: BoxFit.cover,
           ),
         ),
-        alignment: Alignment.center, // Center the container's content
-        child: Padding(
-          padding: EdgeInsets.all(25.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // Center vertically
-            crossAxisAlignment: CrossAxisAlignment.start, // Center horizontally
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 5),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.black.withOpacity(.8),
-                      child: Icon(Icons.person_2, color: Colors.white ),
-                    ),
-                  ),
-                 SizedBox(width: 10),
-                 Text(
-                    "Sign in",
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
+        child: Center(
+          child: Obx(() 
+            => GestureDetector( onLongPress: () => c.count.value = 0 ,
+              child: Text( '${c.count.value}', style: TextStyle(fontSize: 48.0 + (c.count.value * 2), color: Colors.white),
               ),
-             SizedBox(height: 40), // Spacing between rows
-             Text(
-                "Enter your phone number",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                ),
-              ),
-             Padding(
-                padding: EdgeInsets.only(top: 8.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter Phone No',
-                    fillColor: Colors.white.withOpacity(.5), 
-                    filled: true,
-                  ),
-                ),
-              ),
-             SizedBox(height: 10), // Spacing between rows
-             Text(
-                "Enter your Password",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                ),
-              ),
-             Padding(
-                padding: EdgeInsets.only(top: 8.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter Password',
-                    fillColor: Colors.white.withOpacity(.5), 
-                    filled: true,
-                  ),
-                ),
-              ),
-             SizedBox(height: 20),
-              SizedBox(
-                height: 50,
-                child: Container(
-                  alignment: AlignmentDirectional.center,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color.fromARGB(255, 43, 0, 174),
-                  ),
-                  child: Text(
-                    "OTP",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-              SizedBox(height: 30,
-                child: Row(
-                 children: [ Padding(
-                   padding: const EdgeInsets.only(right: 8.0),
-                   child: Text(
-                    "Forgot Password",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black,
-                    ),
-                                 ),
-                 ),
-                Text(
-                  "|  Sign Up",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
-                ),
-                ]
-                ),
-              ),
-              Center(
-                child:  Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: ElevatedButton(
-                       onPressed: () { },
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(style: TextStyle(color: Colors.white, fontSize: 20), 'Login'),
-                  ),
-                ),
-              ),
-              )
-            ],
+            )
           ),
         ),
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          FloatingActionButton(
+                  onPressed: ()
+                  => c.increment(),
+                  backgroundColor: Colors.purple,
+                  child: Icon(Icons.add),
+                ),
+                         
+             FloatingActionButton(
+                  onPressed: ()
+                  => c.decrement(),
+                  backgroundColor: Colors.purple,
+                  child: Icon(Icons.minimize),
+                ),
+        ],
       ),
     );
   }
